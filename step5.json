@@ -1,0 +1,53 @@
+{
+  "Model portfolio performance (10 year annualized return) (using step 1 prices)": [
+    { "year": 1990, "month": 1, "day": 1, "percent_error": 35.3883591936 },
+    { "year": 1993, "month": 1, "day": 1, "percent_error": 19.19663287796776 },
+    { "year": 1995, "month": 1, "day": 1, "percent_error": 21.1944361797 },
+    { "year": 1998, "month": 1, "day": 1, "percent_error": 16.05542540208 },
+    { "year": 1999, "month": 1, "day": 1, "percent_error": 12.7854164204 },
+    { "year": 2000, "month": 1, "day": 1, "percent_error": 22.01492767183 },
+    { "year": 2001, "month": 1, "day": 1, "percent_error": 18.5340856451 },
+    { "year": 2002, "month": 1, "day": 1, "percent_error": 21.05265358994 },
+    { "year": 2003, "month": 1, "day": 1, "percent_error": 17.08875365417 },
+    { "year": 2004, "month": 1, "day": 1, "percent_error": 15.44896231661086 },
+    { "year": 2006, "month": 1, "day": 1, "percent_error": 20.90899111134266 },
+    { "year": 2008, "month": 1, "day": 1, "percent_error": 16.94971465296404 },
+    { "year": 2009, "month": 1, "day": 1, "percent_error": 28.05485111379222 },
+    { "year": 2010, "month": 1, "day": 1, "percent_error": 11.1514050779531 }
+  ],
+  "Model portfolio performance (10 year annualized return) (using step 3 prices)": [
+  { "year": 1990, "month": 1, "day": 1, "percent_error": 2.592472 },
+  { "year": 1993, "month": 1, "day": 1, "percent_error": -0.753328 },
+  { "year": 1995, "month": 1, "day": 1, "percent_error": 28.647742 },
+  { "year": 1998, "month": 1, "day": 1, "percent_error": -5.707763 },
+  { "year": 1999, "month": 1, "day": 1, "percent_error": 8.397216 },
+  { "year": 2000, "month": 1, "day": 1, "percent_error": 15.704703 },
+  { "year": 2001, "month": 1, "day": 1, "percent_error": 10.032194 },
+  { "year": 2002, "month": 1, "day": 1, "percent_error": 14.051891 },
+  { "year": 2003, "month": 1, "day": 1, "percent_error": 10.654189 },
+  { "year": 2004, "month": 1, "day": 1, "percent_error": 4.597426 },
+  { "year": 2006, "month": 1, "day": 1, "percent_error": 2.31138 },
+  { "year": 2007, "month": 1, "day": 1, "percent_error": 4.409663 },
+  { "year": 2008, "month": 1, "day": 1, "percent_error": 11.209306 },
+  { "year": 2009, "month": 1, "day": 1, "percent_error": 9.803253 },
+  { "year": 2010, "month": 1, "day": 1, "percent_error": 11.960504 }
+  ],
+  "S&P 500 performance (10 year annualized return)": [
+    { "year": 1990, "month": 1, "day": 1, "percent_error": 17.448888 },
+    { "year": 1993, "month": 1, "day": 1, "percent_error": 10.964852 },
+    { "year": 1995, "month": 1, "day": 1, "percent_error": 9.142688 },
+    { "year": 1998, "month": 1, "day": 1, "percent_error": -1.197904 },
+    { "year": 1999, "month": 1, "day": 1, "percent_error": -0.862586 },
+    { "year": 2000, "month": 1, "day": 1, "percent_error": 1.468985 },
+    { "year": 2001, "month": 1, "day": 1, "percent_error": 2.957559 },
+    { "year": 2002, "month": 1, "day": 1, "percent_error": 7.136124 },
+    { "year": 2003, "month": 1, "day": 1, "percent_error": 7.444271 },
+    { "year": 2004, "month": 1, "day": 1, "percent_error": 7.522018 },
+    { "year": 2006, "month": 1, "day": 1, "percent_error": 6.991239 },
+    { "year": 2007, "month": 1, "day": 1, "percent_error": 8.35696 },
+    { "year": 2008, "month": 1, "day": 1, "percent_error": 13.700665 },
+    { "year": 2009, "month": 1, "day": 1, "percent_error": 14.256941 },
+    { "year": 2010, "month": 1, "day": 1, "percent_error": 14.417632 }
+  ]
+}
+

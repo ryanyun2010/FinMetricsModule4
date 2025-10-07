@@ -1,0 +1,12 @@
+[package]
+name = "dividend_tests2"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+indicatif = "0.18.0"
+time = "0.3.44"
+tokio-test = "0.4.4"
+yahoo_finance_api = "4.1.0"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
