@@ -1,14 +1,12 @@
-#![allow(dead_code)]
 use std::collections::HashMap;
 use indicatif::{ProgressBar, ProgressStyle};
 use yahoo_finance_api::time::{macros::datetime, OffsetDateTime};
 use yahoo_finance_api::{Decimal, YahooConnector};
 use std::fs::File;
 use std::io::Write;
-use serde::{Serialize, Deserialize};
+use serde::{Serialize};
 
 /* List of S&P 500 companies from 01/01/2008 to 12/31/2012 from https://gist.github.com/alexchinco/1ef9cb653334839f3c24#file-ticker-data-csv*/
-//const STOCKS_IN_SP_500: [&str; 1] = ["EOG"];
 const STOCKS_IN_SP_500: [&str; 542] = ["A", "AA", "AAPL", "ABBV", "ABC", "ABK", "ABT", "ACE", "ACN", "ACT", "ADBE", "ADI", "ADM", "ADP", "ADSK", "ADT", "AEE", "AEP", "AES", "AET", "AFL", "AGL", "AGN", "AIG", "AIV", "AIZ", "AKAM", "AKS", "ALL", "ALTR", "ALXN", "AMAT", "AMD", "AMGN", "AMP", "AMT", "AMZN", "AN", "ANF", "ANR", "AON", "APA", "APC", "APD", "APH", "APOL", "ARG", "ATI", "AVP", "AVY", "AXP", "AYE", "AZO", "BA", "BAC", "BAX", "BBBY", "BBT", "BBY", "BCR", "BDX", "BEAM", "BEN", "BF", "BHI", "BIG", "BIIB", "BJS", "BK", "BLK", "BLL", "BMC", "BMS", "BMY", "BRCM", "BRK", "BSX", "BTU", "BWA", "BXP", "C", "CA", "CAG", "CAH", "CAM", "CAT", "CB", "CBE", "CBG", "CBS", "CCI", "CCL", "CEG", "CELG", "CEPH", "CERN", "CF", "CFN", "CHK", "CHRW", "CI", "CINF", "CL", "CLF", "CLX", "CMA", "CMCSA", "CME", "CMG", "CMI", "CMS", "CNP", "CNX", "COF", "COG", "COH", "COL", "COP", "COST", "COV", "CPB", "CPWR", "CRM", "CSC", "CSCO", "CSX", "CTAS", "CTL", "CTSH", "CTXS", "CVC", "CVH", "CVS", "CVX", "D", "DD", "DE", "DELL", "DF", "DFS", "DG", "DGX", "DHI", "DHR", "DIS", "DISCA", "DLPH", "DLTR", "DNB", "DNR", "DO", "DOV", "DOW", "DPS", "DRI", "DTE", "DTV", "DUK", "DV", "DVA", "DVN", "EA", "EBAY", "ECL", "ED", "EFX", "EIX", "EK", "EL", "EMC", "EMN", "EMR", "EOG", "EP", "EQR", "EQT", "ESRX", "ESV", "ETFC", "ETN", "ETR", "EW", "EXC", "EXPD", "EXPE", "F", "FAST", "FCX", "FDO", "FDX", "FE", "FFIV", "FHN", "FII", "FIS", "FISV", "FITB", "FLIR", "FLR", "FLS", "FMC", "FOSL", "FRX", "FSLR", "FTI", "FTR", "GAS", "GCI", "GD", "GE", "GENZ", "GHC", "GILD", "GIS", "GLW", "GME", "GNW", "GPC", "GPS", "GR", "GRMN", "GS", "GT", "GWW", "HAL", "HAR", "HAS", "HBAN", "HCBK", "HCN", "HCP", "HD", "HES", "HIG", "HNZ", "HOG", "HON", "HOT", "HP", "HPQ", "HRB", "HRL", "HRS", "HSP", "HST", "HSY", "HUM", "IBM", "ICE", "IFF", "IGT", "INTC", "INTU", "IP", "IPG", "IR", "IRM", "ISRG", "ITT", "ITW", "IVZ", "JBL", "JCI", "JCP", "JDSU", "JEC", "JNJ", "JNPR", "JNS", "JOY", "JPM", "JWN", "K", "KEY", "KG", "KIM", "KLAC", "KMB", "KMI", "KMX", "KO", "KR", "KRFT", "KSS", "L", "LB", "LEG", "LEN", "LH", "LIFE", "LLL", "LLTC", "LLY", "LM", "LMT", "LNC", "LO", "LOW", "LRCX", "LSI", "LUK", "LUV", "LXK", "LYB", "M", "MA", "MAR", "MAS", "MAT", "MCD", "MCHP", "MCK", "MCO", "MDLZ", "MDT", "MEE", "MET", "MFE", "MHFI", "MHS", "MI", "MIL", "MJN", "MKC", "MMC", "MMI", "MMM", "MNST", "MO", "MOLX", "MON", "MOS", "MPC", "MRK", "MRO", "MS", "MSFT", "MSI", "MTB", "MU", "MUR", "MWV", "MWW", "MYL", "NBL", "NBR", "NDAQ", "NE", "NEE", "NEM", "NFLX", "NFX", "NI", "NKE", "NOC", "NOV", "NOVL", "NRG", "NSC", "NSM", "NTAP", "NTRS", "NU", "NUE", "NVDA", "NVLS", "NWL", "NWSA", "NYT", "NYX", "ODP", "OKE", "OMC", "ORCL", "ORLY", "OXY", "PAYX", "PBCT", "PBI", "PCAR", "PCG", "PCL", "PCLN", "PCP", "PCS", "PDCO", "PEG", "PEP", "PETM", "PFE", "PFG", "PG", "PGN", "PGR", "PH", "PHM", "PKI", "PLD", "PLL", "PM", "PNC", "PNR", "PNW", "POM", "PPG", "PPL", "PRGO", "PRU", "PSA", "PSX", "PWR", "PX", "PXD", "Q", "QCOM", "QEP", "R", "RAI", "RDC", "RF", "RHI", "RHT", "RL", "ROK", "ROP", "ROST", "RRC", "RRD", "RSG", "RSH", "RTN", "S", "SAI", "SBUX", "SCG", "SCHW", "SE", "SEE", "SGP", "SHLD", "SHW", "SIAL", "SII", "SJM", "SLB", "SLE", "SLM", "SNA", "SNDK", "SNI", "SO", "SPG", "SPLS", "SRCL", "SRE", "STI", "STJ", "STR", "STT", "STX", "STZ", "SUN", "SVU", "SWK", "SWN", "SWY", "SYK", "SYMC", "SYY", "T", "TAP", "TDC", "TE", "TEG", "TEL", "TER", "TGT", "THC", "TIE", "TIF", "TJX", "TLAB", "TMK", "TMO", "TRIP", "TROW", "TRV", "TSN", "TSO", "TSS", "TWC", "TXN", "TXT", "TYC", "UNH", "UNM", "UNP", "UPS", "URBN", "USB", "UTX", "V", "VAR", "VFC", "VIAB", "VLO", "VMC", "VNO", "VRSN", "VTR", "VZ", "WAG", "WAT", "WDC", "WEC", "WFC", "WFM", "WFR", "WHR", "WIN", "WLP", "WM", "WMB", "WMT", "WPX", "WU", "WY", "WYN", "WYNN", "X", "XEL", "XL", "XLNX", "XOM", "XRAY", "XRX", "XTO", "XYL", "YHOO", "YUM", "ZION", "ZMH"];
 
 #[derive(Debug)]
@@ -47,11 +45,6 @@ struct Estimate {
     percent_error: f64
 }
 
-
-struct Portfolio {
-    stocks: HashMap<String, f64> //f64 is percent of Portfolio in that stock, in theory should add
-                                 //to 100 but because of bad precision it probably wont.
-}
 
 
 
